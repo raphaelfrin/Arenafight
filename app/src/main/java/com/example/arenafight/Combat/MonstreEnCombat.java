@@ -1,8 +1,10 @@
-package com.example.arenafight.Combat;
+/*package com.example.arenafight.Combat;
 
 import com.example.arenafight.monstre.Monstre;
 
-public class MonstreEnCombat {
+import java.io.Serializable;
+
+public class MonstreEnCombat implements Serializable {
 
     private String nom;
     private int pv;
@@ -45,3 +47,4 @@ public class MonstreEnCombat {
         return pv > 0;
     }
 }
+*/

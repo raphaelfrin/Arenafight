@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.example.arenafight.Combat.Combat;
+import com.example.arenafight.Combat.CombatState;
 import com.example.arenafight.databinding.ActivityCombatBinding;
 import com.example.arenafight.monstre.Monstre;
 import com.example.arenafight.monstre.UtilisMonstre;
@@ -25,14 +26,10 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Objects;
 
-import static com.example.arenafight.Combat.Combat.lancerCombat;
-
 public class CombatActivity extends AppCompatActivity {
     ActivityCombatBinding binding;
-    private boolean combatLance = false;
+    private CombatState state;
 
-    private int posJ = 0;
-    private int posM = 9;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,20 +74,6 @@ public class CombatActivity extends AppCompatActivity {
             return;
         }
 
-        if (savedInstanceState != null) {
-
-            combatLance =
-                    savedInstanceState.getBoolean(
-                            "combatLance"
-                    );
-
-            posJ =
-                    savedInstanceState.getInt("posJ");
-
-            posM =
-                    savedInstanceState.getInt("posM");
-        }
-
         getOnBackPressedDispatcher().addCallback(this,
                 new androidx.activity.OnBackPressedCallback(true) {
 
@@ -98,7 +81,7 @@ public class CombatActivity extends AppCompatActivity {
                     public void handleOnBackPressed() {
 
                         // Combat lancé → quitte l'app
-                        if (combatLance) {
+                        if (state.combatLance) {
 
                             moveTaskToBack(true);
                         }
@@ -111,9 +94,29 @@ public class CombatActivity extends AppCompatActivity {
                     }
                 });
 
-        if (combatLance) {
-            binding.imageJoueur.setVisibility(View.GONE);
+        if (savedInstanceState != null) {
 
+            state = (CombatState) savedInstanceState.getSerializable("state");
+
+        } else {
+
+            state = new CombatState();
+            state.combatLance = false;
+        }
+
+        if (state.combatLance) {
+
+            try {
+                Combat combat = new Combat();
+                combat.lancerCombat(this, perso, binding, state);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            binding.imageJoueur.setVisibility(View.GONE);
+            binding.btnFight.setVisibility(View.GONE);
+            binding.Retour.setVisibility(View.GONE);
         } else {
             binding.imageJoueur.setVisibility(View.VISIBLE);
 
@@ -122,56 +125,32 @@ public class CombatActivity extends AppCompatActivity {
             );
 
         }
-        // Cache les barres de vie
-        binding.barVieJoueur.setVisibility(View.GONE);
-        binding.barVieMonstre.setVisibility(View.GONE);
-
-        // Cache les images
-        binding.imageMonstre.setVisibility(View.GONE);
 
         //bouton fight
         binding.btnFight.setOnClickListener(v -> {
-            combatLance = true;
+
+            state.combatLance = true;
+            binding.btnFight.setVisibility(android.view.View.GONE);
+            binding.Retour.setVisibility(android.view.View.GONE);
             binding.imageJoueur.setVisibility(View.GONE);
 
             try {
-                Combat.lancerCombat(this, perso, binding);
-
-                // Cache les boutons
-                binding.btnFight.setVisibility(android.view.View.GONE);
-                binding.Retour.setVisibility(android.view.View.GONE);
-
+                Combat combat = new Combat();
+                combat.lancerCombat(this, perso, binding, state);
             }
             catch (Exception e) {
-
-                Toast.makeText(
-                        this,
-                        e.getMessage(),
-                        Toast.LENGTH_SHORT
-                ).show();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
         binding.Retour.setOnClickListener(v -> finish());
 
-        if (combatLance) {
-
-            binding.btnFight.setVisibility(View.GONE);
-            binding.Retour.setVisibility(View.GONE);
-
-            binding.layoutPlateau.setVisibility(View.VISIBLE);
-
-            Combat.lancerCombat(this, perso, binding);
-        }
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean("combatLance", combatLance);
-
-        outState.putInt("posJ", posJ);
-        outState.putInt("posM", posM);
+        outState.putSerializable("state", state);
     }
 }

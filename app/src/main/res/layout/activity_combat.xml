@@ -48,47 +48,16 @@
                 android:contentDescription="@string/imgjoueur"
                 android:scaleType="fitCenter"/>
 
-        <!-- Barre de vie joueur -->
-        <ProgressBar
-                android:id="@+id/barVieJoueur"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="12dp"
-                android:layout_gravity="top"
-                android:max="100"
-                android:progress="100"
-                android:progressDrawable="@drawable/barre_vie"/>
     </FrameLayout>
 
-    <!-- Monstre -->
-    <FrameLayout
-            android:id="@+id/frameLayoutMonstre"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            app:layout_constraintEnd_toEndOf="parent"
+
+    <LinearLayout
+            android:id="@+id/layoutPlateau"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-
-            android:layout_marginEnd="32dp">
-
-        <!-- Image monstre -->
-
-        <!-- Barre de vie monstre -->
-        <ImageView
-                android:id="@+id/imageMonstre"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/monstre"
-                android:scaleType="fitCenter"
-                android:src="@drawable/rat"/>
-        <ProgressBar
-                android:id="@+id/barVieMonstre"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="12dp"
-                android:layout_gravity="top"
-                android:max="100"
-                android:progress="100"
-                android:progressDrawable="@drawable/barre_vie"/>
-    </FrameLayout>
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

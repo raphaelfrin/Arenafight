@@ -8,23 +8,49 @@
         android:layout_height="match_parent"
         tools:context=".CombatActivity">
 
+    <!-- Bouton combattre -->
     <Button
             android:id="@+id/btnFight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fight"
-            tools:ignore="MissingConstraints"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.498" app:layout_constraintVertical_bias="0.742"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75"/>
+
+    <!-- Bouton retour -->
     <Button
-            android:text="@string/retour"
+            android:id="@+id/Retour"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/Retour"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.049" app:layout_constraintVertical_bias="0.04"/>
+            android:layout_height="wrap_content"
+            android:text="@string/retour"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="16dp"/>
+
+    <!-- Joueur -->
+    <FrameLayout
+            android:id="@+id/frameLayoutJoueur"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Image joueur -->
+        <ImageView
+                android:id="@+id/imageJoueur"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/imgjoueur"
+                android:scaleType="fitCenter"/>
+
+    </FrameLayout>
+
+
     <LinearLayout
             android:id="@+id/layoutPlateau"
             android:layout_width="wrap_content"
@@ -34,56 +60,4 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-    <FrameLayout
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            tools:ignore="MissingConstraints" android:id="@+id/frameLayout" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toTopOf="@+id/btnFight">
-
-        <!-- Image du joueur -->
-        <!-- Barre de vie -->
-        <ImageView
-                android:id="@+id/imageJoueur"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        <ProgressBar
-                android:id="@+id/barVieJoueur"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="12dp"
-                android:max="100"
-                android:progress="100"
-                android:layout_gravity="top"
-                android:progressDrawable="@drawable/barre_vie"/>
-
-
-    </FrameLayout>
-
-    <FrameLayout
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            tools:ignore="MissingConstraints" app:layout_constraintEnd_toEndOf="parent" android:id="@+id/frameLayout2">
-
-        <!-- Image monstre -->
-
-        <!-- Barre de vie -->
-        <ImageView
-                android:id="@+id/imageMonstre"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/monstre"
-                android:scaleType="fitCenter"
-                android:src="@drawable/rat"/>
-        <ProgressBar
-                android:id="@+id/barVieMonstre"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="12dp"
-                android:max="100"
-                android:progress="100"
-                android:layout_gravity="top"
-                android:progressDrawable="@drawable/barre_vie"/>
-
-    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

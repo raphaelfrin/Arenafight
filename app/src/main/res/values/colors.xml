@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="vert">#1C700B</color>
+    <color name="vert1">#4CAF50</color> <!-- vert moyen -->
+    <color name="red">#A20606</color>
+    <color name="red1">#F44336</color> <!-- rouge vif -->
+    <color name="red2">#D32F2F</color> <!-- rouge foncé -->
+    <color name="bleu">#2196F3</color> <!-- bleu vif -->
+    <color name="jaune">#FFEB3B</color> <!-- jaune lumineux -->
+    <color name="violet">#9C27B0</color> <!-- violet moyen -->
+</resources>

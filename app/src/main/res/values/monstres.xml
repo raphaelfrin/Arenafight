@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="noms_monstres">
+        <item>Rat</item>
+        <item>Gobelin</item>
+        <item>Loup</item>
+        <item>orc</item>
+        <item>Troll</item>
+    </string-array>
+    <integer-array name="niveauMin_monstres">
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+    </integer-array>
+    <integer-array name="niveauMax_monstres">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>6</item>
+        <item>9</item>
+    </integer-array>
+    <integer-array name="pv_monstres">
+        <item>8</item>
+        <item>12</item>
+        <item>16</item>
+        <item>22</item>
+        <item>30</item>
+    </integer-array>
+    <integer-array name="atq_monstres">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>7</item>
+        <item>9</item>
+    </integer-array>
+    <integer-array name="def_monstres">
+        <item>1</item>
+        <item>2</item>
+        <item>2</item>
+        <item>3</item>
+        <item>9</item>
+    </integer-array>
+</resources>

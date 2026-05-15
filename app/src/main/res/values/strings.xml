@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">ArenaFight</string>
+    <string name="button">Button</string>
+    <string name="arenafight">ArenaFight</string>
+    <string name="bienvenue_aventutrier">bienvenu aventutrier</string>
+    <string name="jouer">Jouer</string>
+    <string name="pv">PV</string>
+    <string name="atq">ATQ</string>
+    <string name="def">DEF</string>
+    <string name="niveau">Niveau</string>
+    <string name="Nom">Nom</string>
+    <string name="que_le_combat_commence">que le combat commence</string>
+    <string name="classe">classe</string>
+    <string name="retour">Retour</string>
+    <string name="nouveau_personnage">Nouveau personnage</string>
+    <string name="textviewmonstre">textViewMonstre</string>
+    <string name="fight">fight</string>
+    <string name="todo">TODO</string>
+    <string name="joueur">joueur</string>
+    <string name="monstre">monstre</string>
+    <string name="imgjoueur">imgjoueur</string>
+
+    <string-array name="options_menu">
+        <item>Choisissez une classe</item>
+        <item>Guerrier</item>
+        <item>Mage</item>
+        <item>Assassin</item>
+    </string-array>
+</resources>

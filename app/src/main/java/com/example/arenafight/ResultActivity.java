@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Log;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -65,10 +66,16 @@ public class ResultActivity extends AppCompatActivity {
             return;
         }
 
-        // 🟢 VICTOIRE
+        Log.d("RESULT", "LV sauvegardé = " + perso.getLv());
+        Log.d("RESULT", "EXP sauvegardé = " + perso.getExp());
+        Log.e("TEST", "je suis dans result");
+
+        // VICTOIRE
         if (victoire) {
 
             binding.txtResult.setText("Victoire !");
+            // on SAUVEGARDE
+            PersonnagePreferences.sauvegarderPersonnage(this, perso);
 
             String stats =
                     "Niveau : " + perso.getLv()
@@ -85,40 +92,31 @@ public class ResultActivity extends AppCompatActivity {
 
             binding.btnAction.setOnClickListener(v -> {
 
-                Intent intent =
-                        new Intent(this, CombatActivity.class);
-
+                Intent intent = new Intent(this, CombatActivity.class);
                 intent.putExtra("perso", perso);
-
                 startActivity(intent);
-
                 finish();
             });
         }
 
-        // 🔴 DEFAITE
+        // DEFAITE
         else {
 
             binding.txtResult.setText("Défaite...");
 
-            binding.txtStats.setText(
-                    perso.getNom() + " est mort."
-            );
-            //pass l'etat a mort
+            binding.txtStats.setText(perso.getNom() + " est KO.");
+
+            // on SAUVEGARDE
+            PersonnagePreferences.sauvegarderPersonnage(this, perso);
 
             binding.btnAction.setText("Retour menu");
 
             binding.btnAction.setOnClickListener(v -> {
 
-                Intent intent =
-                        new Intent(this, MainActivity.class);
-
-                intent.addFlags(
-                        Intent.FLAG_ACTIVITY_CLEAR_TOP
-                );
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                 startActivity(intent);
-
                 finish();
             });
         }

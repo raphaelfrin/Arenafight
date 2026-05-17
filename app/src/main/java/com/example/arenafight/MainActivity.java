@@ -28,7 +28,8 @@ import java.text.MessageFormat;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-
+    private boolean isLoading = false;
+    private Personnage currentPerso;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private void closeKeyboard() {
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         // fermer le clavier au toucher
         binding.main.setOnClickListener(v -> closeKeyboard());
 
+
         //bouton jouer
         binding.buttonPlay.setOnClickListener(v -> {
 
@@ -85,20 +87,27 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            String classe = binding.SpinnerClasse.getSelectedItem().toString();
-            Personnage perso = null;
+            Personnage perso;
 
-            // Création de l'objet perso selon la classe choisie
-            switch (classe) {
-                case "Guerrier":
-                    perso = new Guerrier(nomJoueur);
-                    break;
-                case "Mage":
-                    perso = new Mage(nomJoueur);
-                    break;
-                case "Assassin":
-                    perso = new Assassin(nomJoueur);
-                    break;
+            String classe = binding.SpinnerClasse.getSelectedItem().toString();
+
+            if (currentPerso != null && currentPerso.getClasse().equals(classe)) {
+                // on continue le vrai perso seulement si même classe
+                perso = currentPerso;
+            } else {
+                switch (classe) {
+                    case "Guerrier":
+                        perso = new Guerrier(nomJoueur);
+                        break;
+                    case "Mage":
+                        perso = new Mage(nomJoueur);
+                        break;
+                    case "Assassin":
+                        perso = new Assassin(nomJoueur);
+                        break;
+                    default:
+                        return;
+                }
             }
 
             if (perso != null) {
@@ -142,115 +151,82 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                closeKeyboard();
-                binding.editTextNom.clearFocus();
-
-                closeKeyboard();
-                binding.editTextNom.clearFocus();
+                if (isLoading) return;
 
                 if (position == 0) {
                     visibleHelper.afficherStats(false);
                     return;
                 }
+
                 visibleHelper.afficherStats(true);
-                Personnage perso = null;
 
                 String classe = parent.getItemAtPosition(position).toString();
 
-                switch (classe) {
-                    case "Guerrier":
-                        perso = new Guerrier(Objects.requireNonNull(binding.editTextNom.getText()).toString());
-                        break;
+                // JUSTE preview, PAS de logique perso global
+                Personnage preview = createPreview(classe);
 
-                    case "Mage":
-                        perso = new Mage(Objects.requireNonNull(binding.editTextNom.getText()).toString());
-                        break;
+                updateStats(preview);
 
-                    case "Assassin":
-                        perso = new Assassin(Objects.requireNonNull(binding.editTextNom.getText()).toString());
-                        break;
-                }
-
-                if (perso != null) {
-                    binding.textViewPV.setText(MessageFormat.format("PV : {0}", perso.getPv()));
-                    binding.textViewATQ.setText(MessageFormat.format("ATQ : {0}", perso.getAtq()));
-                    binding.textViewDEF.setText(MessageFormat.format("DEF : {0}", perso.getDef()));
-                    binding.textViewLV.setText(MessageFormat.format("Niveau : {0}", perso.getLv()));
-                }
-                Log.d(TAG, "Classe choisie : " + classe);
+                Log.d(TAG, "Preview classe : " + classe);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-        // Vérifie si un personnage existe
-        if(PersonnagePreferences.personnageExiste(this)) {
+    }
 
-            // Affiche le bouton Nouveau personnage
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        isLoading = true;
+
+        if (PersonnagePreferences.personnageExiste(this)) {
+
+            currentPerso = PersonnagePreferences.chargerPersonnage(this);
+
             binding.btnNouveau.setVisibility(View.VISIBLE);
 
-            // Préremplir le nom
-            binding.editTextNom.setText(
-                    PersonnagePreferences.getNom(this)
-            );
-            // Empêche modification du nom
+            binding.editTextNom.setText(currentPerso.getNom());
             binding.editTextNom.setEnabled(false);
 
-            // Afficher classe sélectionnée
-            String classe =
-                    PersonnagePreferences.getClasse(this);
-
-            switch (classe) {
-
-                case "Guerrier":
-                    binding.SpinnerClasse.setSelection(1);
-                    break;
-
-                case "Mage":
-                    binding.SpinnerClasse.setSelection(2);
-                    break;
-
-                case "Assassin":
-                    binding.SpinnerClasse.setSelection(3);
-                    break;
-            }
-            Visible visibleHelper = new Visible(binding);
-            visibleHelper.afficherStats(true);
-
-            binding.textViewPV.setText(
-                    MessageFormat.format(
-                            "PV : {0}/{1}",
-                            PersonnagePreferences.getPvActuel(this),
-                            PersonnagePreferences.getPv(this)
-                    )
-            );
-
-            binding.textViewATQ.setText(
-                    MessageFormat.format(
-                            "ATQ : {0}",
-                            PersonnagePreferences.getAtq(this)
-                    )
-            );
-
-            binding.textViewDEF.setText(
-                    MessageFormat.format(
-                            "DEF : {0}",
-                            PersonnagePreferences.getDef(this)
-                    )
-            );
-
-            binding.textViewLV.setText(
-                    MessageFormat.format(
-                            "Niveau : {0}",
-                            PersonnagePreferences.getLv(this)
-                    )
-            );
-            // Désactive le spinner
             binding.SpinnerClasse.setEnabled(false);
             binding.SpinnerClasse.setClickable(false);
+
+            isLoading = true;
+
+            // on désactive le listener temporairement
+            AdapterView.OnItemSelectedListener oldListener = binding.SpinnerClasse.getOnItemSelectedListener();
+            binding.SpinnerClasse.setOnItemSelectedListener(null);
+
+            // on applique la sélection SANS trigger onItemSelected
+            switch (currentPerso.getClasse()) {
+                case "Guerrier":
+                    binding.SpinnerClasse.setSelection(1, false);
+                    break;
+                case "Mage":
+                    binding.SpinnerClasse.setSelection(2, false);
+                    break;
+                case "Assassin":
+                    binding.SpinnerClasse.setSelection(3, false);
+                    break;
+            }
+
+            // on remet le listener
+            binding.SpinnerClasse.setOnItemSelectedListener(oldListener);
+
+            isLoading = false;
+            updateStats(currentPerso);
+        } else {
+            currentPerso = null;
         }
+
+        isLoading = false;
+
+
 
         // Si le personnage est mort
         if(PersonnagePreferences.estMort(this)) {
+            binding.buttonPlay.setEnabled(false);
 
             Toast.makeText(
                     this,
@@ -260,38 +236,63 @@ public class MainActivity extends AppCompatActivity {
 
             binding.buttonPlay.setEnabled(false);
         }
-        Button btnNouveau = findViewById(R.id.btnNouveau);
+
         binding.btnNouveau.setOnClickListener(v -> {
 
-            // Efface les préférences
             PersonnagePreferences.supprimerPersonnage(this);
 
-            // Réinitialise le nom
+            currentPerso = null; // IMPORTANT
+
+            // reset UI complet
             binding.editTextNom.setText("");
-            // Réactive le champ nom
             binding.editTextNom.setEnabled(true);
 
-            // Réactive le spinner
             binding.SpinnerClasse.setEnabled(true);
             binding.SpinnerClasse.setClickable(true);
-            // Reset spinner
-            binding.SpinnerClasse.setSelection(0);
 
-            // Cache le bouton après suppression
+            isLoading = true;
+            binding.SpinnerClasse.setSelection(0);
+            isLoading = false;
+
             binding.btnNouveau.setVisibility(View.GONE);
+
+            // RESET STATS IMPORTANT
+            binding.textViewPV.setText("PV : -");
+            binding.textViewATQ.setText("ATQ : -");
+            binding.textViewDEF.setText("DEF : -");
+            binding.textViewLV.setText("Niveau : -");
 
             Visible visibleHelper = new Visible(binding);
             visibleHelper.afficherStats(false);
 
-
-
             binding.buttonPlay.setEnabled(true);
 
-            Toast.makeText(
-                    this,
-                    "Nouveau personnage créé",
-                    Toast.LENGTH_SHORT
-            ).show();
+            Toast.makeText(this, "Nouveau personnage créé", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private Personnage createPreview(String classe) {
+
+        String nom = binding.editTextNom.getText().toString();
+        if (nom.isEmpty()) nom = "Preview";
+
+        switch (classe) {
+            case "Guerrier":
+                return new Guerrier(nom);
+            case "Mage":
+                return new Mage(nom);
+            case "Assassin":
+                return new Assassin(nom);
+            default:
+                return null;
+        }
+    }
+    private void updateStats(Personnage p) {
+        if (p == null) return;
+
+        binding.textViewPV.setText("PV : " + p.getPv());
+        binding.textViewATQ.setText("ATQ : " + p.getAtq());
+        binding.textViewDEF.setText("DEF : " + p.getDef());
+        binding.textViewLV.setText("Niveau : " + p.getLv());
     }
 }

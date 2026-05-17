@@ -3,6 +3,9 @@ package com.example.arenafight.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.arenafight.personnage.Assassin;
+import com.example.arenafight.personnage.Guerrier;
+import com.example.arenafight.personnage.Mage;
 import com.example.arenafight.personnage.Personnage;
 
 public class PersonnagePreferences {
@@ -16,6 +19,7 @@ public class PersonnagePreferences {
     private static final String KEY_ATQ = "atq";
     private static final String KEY_DEF = "def";
     private static final String KEY_LV = "lv";
+    private static final String KEY_EXP = "Exp";
     private static final String KEY_PV_ACTUEL = "pv_actuel";
     private static final String KEY_MONSTRES = "monstres";
     private static final String KEY_MORT = "mort";
@@ -39,10 +43,43 @@ public class PersonnagePreferences {
         editor.putInt(KEY_DEF, p.getDef());
 
         editor.putInt(KEY_LV, p.getLv());
+        editor.putInt(KEY_EXP, p.getExp());
+
 
         editor.putBoolean(KEY_MORT, !p.estVivant());
 
         editor.apply();
+    }
+
+    public static Personnage chargerPersonnage(Context context) {
+
+        String nom = getNom(context);
+        String classe = getClasse(context);
+
+        Personnage p;
+
+        switch (classe) {
+            case "Guerrier":
+                p = new Guerrier(nom);
+                break;
+            case "Mage":
+                p = new Mage(nom);
+                break;
+            case "Assassin":
+                p = new Assassin(nom);
+                break;
+            default:
+                return null;
+        }
+
+        p.setPv(getPv(context));
+        p.setPvActuel(getPvActuel(context));
+        p.setAtq(getAtq(context));
+        p.setDef(getDef(context));
+        p.setLv(getLv(context));
+        p.setExp(getExp(context));
+
+        return p;
     }
     public static int getPv(Context context) {
 
@@ -74,6 +111,13 @@ public class PersonnagePreferences {
                 context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
         return prefs.getInt(KEY_LV, 1);
+    }
+    public static int getExp(Context context) {
+
+        SharedPreferences prefs =
+                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
+        return prefs.getInt(KEY_EXP, 0);
     }
 
     public static int getPvActuel(Context context) {

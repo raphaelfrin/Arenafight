@@ -142,10 +142,7 @@ public class CombatActivity extends AppCompatActivity {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
         binding.Retour.setOnClickListener(v -> finish());
-
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {

@@ -9,5 +9,7 @@ public class CombatState implements Serializable {
     public int posJ;
     public int posM;
     public int hpJ;
+    public int hpJMax;
     public boolean combatLance;
+    public boolean tourJoueur;
 }

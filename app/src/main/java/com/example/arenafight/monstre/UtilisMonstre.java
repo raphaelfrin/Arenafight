@@ -26,6 +26,9 @@ public class UtilisMonstre {
         int[] niveauMax =
                 context.getResources().getIntArray(R.array.niveauMax_monstres);
 
+        int[] pvMax =
+                context.getResources().getIntArray(R.array.pv_monstres);
+
         int[] pv =
                 context.getResources().getIntArray(R.array.pv_monstres);
 
@@ -49,6 +52,7 @@ public class UtilisMonstre {
                     noms[i],
                     niveauMin[i],
                     niveauMax[i],
+                    pvMax[i],
                     pv[i],
                     atq[i],
                     def[i],

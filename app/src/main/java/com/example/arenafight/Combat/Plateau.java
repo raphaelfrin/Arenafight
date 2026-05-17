@@ -75,8 +75,6 @@ public class Plateau {
             barreParams.rightMargin = 20;
 
             barreVie.setLayoutParams(barreParams);
-            barreVie.setMax(100);
-            barreVie.setProgress(100);
 
             barreVie.setProgressDrawable(
                     AppCompatResources.getDrawable(context, R.drawable.barre_vie)
@@ -86,6 +84,9 @@ public class Plateau {
             if (i == state.posJ) {
 
                 imageCase.setImageResource(imageJoueur);
+                barreVie.setMax(state.hpJMax);
+                barreVie.setProgress(state.hpJ);
+
                 casePlateau.addView(barreVie);
             }
 
@@ -93,6 +94,9 @@ public class Plateau {
             else if (i == state.posM) {
 
                 imageCase.setImageResource(state.monstre.getImageResId());
+                barreVie.setMax(state.monstre.getPvMax());
+                barreVie.setProgress(state.monstre.getPv());
+
                 casePlateau.addView(barreVie);
             }
 

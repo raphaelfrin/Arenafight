@@ -20,7 +20,8 @@ public class Combat {
 
             state.posJ = 0;
             state.posM = taillPlateau - 1;
-            state.hpJ = perso.getPv();
+            state.hpJMax = perso.getPv();
+            state.hpJ = perso.getPvActuel();
 
             state.combatLance = true;
         }

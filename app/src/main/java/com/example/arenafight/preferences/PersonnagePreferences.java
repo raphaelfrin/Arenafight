@@ -20,6 +20,7 @@ public class PersonnagePreferences {
     private static final String KEY_MONSTRES = "monstres";
     private static final String KEY_MORT = "mort";
 
+
     // Sauvegarde
     public static void sauvegarderPersonnage(Context context, Personnage p) {
 
@@ -42,6 +43,45 @@ public class PersonnagePreferences {
         editor.putBoolean(KEY_MORT, !p.estVivant());
 
         editor.apply();
+    }
+    public static int getPv(Context context) {
+
+        SharedPreferences prefs =
+                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
+        return prefs.getInt(KEY_PV, 0);
+    }
+
+    public static int getAtq(Context context) {
+
+        SharedPreferences prefs =
+                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
+        return prefs.getInt(KEY_ATQ, 0);
+    }
+
+    public static int getDef(Context context) {
+
+        SharedPreferences prefs =
+                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
+        return prefs.getInt(KEY_DEF, 0);
+    }
+
+    public static int getLv(Context context) {
+
+        SharedPreferences prefs =
+                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
+        return prefs.getInt(KEY_LV, 1);
+    }
+
+    public static int getPvActuel(Context context) {
+
+        SharedPreferences prefs =
+                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
+        return prefs.getInt(KEY_PV_ACTUEL, 0);
     }
 
     // Vérifie si un personnage existe

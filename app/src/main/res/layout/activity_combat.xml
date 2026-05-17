@@ -60,4 +60,40 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+            android:id="@+id/btnAtk1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/atk_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.126" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.913" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnAtk2"/>
+    <Button
+            android:id="@+id/btnAtk2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/atk_2" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.198"
+            app:layout_constraintVertical_bias="0.918" app:layout_constraintEnd_toStartOf="@+id/btnMove2"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <Button
+            android:id="@+id/btnMove1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/move" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.841" app:layout_constraintVertical_bias="0.774"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/btnAtk1"/>
+    <Button
+            android:id="@+id/btnMove2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Move2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/btnMove1"
+            app:layout_constraintHorizontal_bias="0.921" app:layout_constraintVertical_bias="0.471"
+            app:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

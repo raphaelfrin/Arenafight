@@ -10,6 +10,9 @@ public class CombatState implements Serializable {
     public int posM;
     public int hpJ;
     public int hpJMax;
-    public boolean combatLance;
-    public boolean tourJoueur;
+    public boolean joueurDefense;
+    public boolean enModeDeplacement = false;
+    public int distanceDeplacement = 0;
+    public boolean tourJoueur = true;
+    public boolean combatLance = true;
 }

@@ -19,6 +19,9 @@
     <string name="joueur">joueur</string>
     <string name="monstre">monstre</string>
     <string name="imgjoueur">imgjoueur</string>
+    <string name="atk_1">Atk 1</string>
+    <string name="atk_2">Atk 2</string>
+    <string name="move">Move</string>
 
     <string-array name="options_menu">
         <item>Choisissez une classe</item>

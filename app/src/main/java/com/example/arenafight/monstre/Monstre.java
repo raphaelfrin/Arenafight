@@ -1,6 +1,8 @@
 package com.example.arenafight.monstre;
 
-public class Monstre {
+import java.io.Serializable;
+
+public class Monstre implements Serializable {
 
     private String nom;
     private int niveauMin;
@@ -43,6 +45,12 @@ public class Monstre {
     }
     public int getDef() {
         return def;
+    }
+
+    public void setPv(int pv) { this.pv = pv; }
+
+    public boolean estVivant() {
+        return this.pv > 0;
     }
     public int getImageResId() {
         return imageResId;

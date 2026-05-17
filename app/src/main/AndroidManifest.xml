@@ -10,6 +10,9 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.ArenaFight">
         <activity
+                android:name=".ResultActivity"
+                android:exported="false"/>
+        <activity
                 android:name=".CombatActivity"
                 android:exported="false"/>
         <activity

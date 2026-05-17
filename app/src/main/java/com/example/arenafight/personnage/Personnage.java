@@ -66,7 +66,6 @@ public class Personnage implements Serializable {
 
     public void levelUp() {
         lv++; // on passe au niveau supérieur
-        System.out.println("\nFélicitations ! " + nom + " passe au niveau " + lv + " !");
 
         // Augmentation des stats selon la classe
         switch (classe) {
@@ -80,7 +79,6 @@ public class Personnage implements Serializable {
                 pv += 5;
                 pvActuel = pv;
                 atq += 5;
-                def += 0;
                 break;
             case "Assassin":
                 pv += 3;
@@ -92,7 +90,5 @@ public class Personnage implements Serializable {
                 // classes futures
                 break;
         }
-
-        System.out.println("Nouvelles stats : PV=" + pv + ", ATQ=" + atq + ", DEF=" + def);
     }
 }

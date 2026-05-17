@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.SpinnerClasse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            boolean isFirstSelection = true;
             final Visible visibleHelper = new Visible(binding);
 
             @Override
@@ -145,12 +144,6 @@ public class MainActivity extends AppCompatActivity {
 
                 closeKeyboard();
                 binding.editTextNom.clearFocus();
-
-                if (isFirstSelection) {
-                    isFirstSelection = false;
-                    visibleHelper.afficherStats(false);
-                    return;
-                }
 
                 closeKeyboard();
                 binding.editTextNom.clearFocus();
@@ -202,10 +195,6 @@ public class MainActivity extends AppCompatActivity {
             // Empêche modification du nom
             binding.editTextNom.setEnabled(false);
 
-            // Désactive le spinner
-            binding.SpinnerClasse.setEnabled(false);
-            binding.SpinnerClasse.setClickable(false);
-
             // Afficher classe sélectionnée
             String classe =
                     PersonnagePreferences.getClasse(this);
@@ -224,7 +213,40 @@ public class MainActivity extends AppCompatActivity {
                     binding.SpinnerClasse.setSelection(3);
                     break;
             }
+            Visible visibleHelper = new Visible(binding);
+            visibleHelper.afficherStats(true);
 
+            binding.textViewPV.setText(
+                    MessageFormat.format(
+                            "PV : {0}/{1}",
+                            PersonnagePreferences.getPvActuel(this),
+                            PersonnagePreferences.getPv(this)
+                    )
+            );
+
+            binding.textViewATQ.setText(
+                    MessageFormat.format(
+                            "ATQ : {0}",
+                            PersonnagePreferences.getAtq(this)
+                    )
+            );
+
+            binding.textViewDEF.setText(
+                    MessageFormat.format(
+                            "DEF : {0}",
+                            PersonnagePreferences.getDef(this)
+                    )
+            );
+
+            binding.textViewLV.setText(
+                    MessageFormat.format(
+                            "Niveau : {0}",
+                            PersonnagePreferences.getLv(this)
+                    )
+            );
+            // Désactive le spinner
+            binding.SpinnerClasse.setEnabled(false);
+            binding.SpinnerClasse.setClickable(false);
         }
 
         // Si le personnage est mort

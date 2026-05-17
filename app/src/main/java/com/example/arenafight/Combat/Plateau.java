@@ -13,17 +13,20 @@ import android.widget.ProgressBar;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.arenafight.R;
+import com.example.arenafight.databinding.ActivityCombatBinding;
+import com.example.arenafight.personnage.Personnage;
 
 public class Plateau {
-
+    public static boolean isMoveMode = false;
     public static void afficherPlateau(
             Context context,
             LinearLayout layoutPlateau,
             CombatState state,
             int taille,
-            int imageJoueur
+            int imageJoueur,
+            Personnage perso,
+            ActivityCombatBinding binding
     ) {
-
         layoutPlateau.removeAllViews();
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -35,6 +38,22 @@ public class Plateau {
         int caseSize = screenWidth / taille;
 
         for (int i = 0; i < taille; i++) {
+
+            boolean isCaseAccessible;
+
+            if (state.enModeDeplacement) {
+
+                int min = Math.max(0, state.posJ - state.distanceDeplacement);
+                int max = Math.min(state.posM - 1, state.posJ + state.distanceDeplacement);
+
+                if (i >= min && i <= max) {
+                    isCaseAccessible = true;
+                } else {
+                    isCaseAccessible = false;
+                }
+            } else {
+                isCaseAccessible = false;
+            }
 
             FrameLayout casePlateau = new FrameLayout(context);
 
@@ -103,10 +122,47 @@ public class Plateau {
             // VIDE
             else {
                 imageCase.setImageResource(R.drawable.case_vide);
+                if (isCaseAccessible) {
+                    imageCase.setColorFilter(0x550000FF); // bleu transparent
+                }
             }
+
+            final int index = i;
+
+            casePlateau.setOnClickListener(v -> {
+
+                if (!state.enModeDeplacement) return;
+                if (!isCaseAccessible) return;
+
+                state.posJ = index;
+
+                state.enModeDeplacement = false;
+
+                // refresh plateau
+                Plateau.afficherPlateau(
+                        context,
+                        layoutPlateau,
+                        state,
+                        taille,
+                        imageJoueur,
+                        perso,
+                        binding
+                );
+
+                // fin du tour joueur
+                state.tourJoueur = false;
+
+                FinTour.finTour(
+                        state,
+                        perso,
+                        context,
+                        binding
+                );
+            });
 
             casePlateau.addView(imageCase);
             layoutPlateau.addView(casePlateau);
         }
     }
+
 }

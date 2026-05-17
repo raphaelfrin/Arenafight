@@ -1,6 +1,6 @@
 package com.example.arenafight;
 
-import android.content.Intent;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -12,19 +12,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.example.arenafight.Combat.Combat;
 import com.example.arenafight.Combat.CombatState;
+import com.example.arenafight.Combat.TourJoueur;
 import com.example.arenafight.databinding.ActivityCombatBinding;
-import com.example.arenafight.monstre.Monstre;
-import com.example.arenafight.monstre.UtilisMonstre;
-import com.example.arenafight.personnage.Assassin;
-import com.example.arenafight.personnage.Guerrier;
-import com.example.arenafight.personnage.Mage;
 import com.example.arenafight.personnage.Personnage;
-import com.example.arenafight.preferences.PersonnagePreferences;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.io.Serializable;
-import java.text.MessageFormat;
-import java.util.Objects;
 
 public class CombatActivity extends AppCompatActivity {
     ActivityCombatBinding binding;
@@ -82,7 +72,6 @@ public class CombatActivity extends AppCompatActivity {
 
                         // Combat lancé → quitte l'app
                         if (state.combatLance) {
-
                             moveTaskToBack(true);
                         }
 
@@ -94,9 +83,18 @@ public class CombatActivity extends AppCompatActivity {
                     }
                 });
 
+        binding.btnAtk1.setVisibility(View.GONE);
+        binding.btnAtk2.setVisibility(View.GONE);
+        binding.btnMove1.setVisibility(View.GONE);
+        binding.btnMove2.setVisibility(View.GONE);
+
         if (savedInstanceState != null) {
 
             state = (CombatState) savedInstanceState.getSerializable("state");
+            if (state == null) {
+                state = new CombatState();
+                state.combatLance = false;
+            }
 
         } else {
 
@@ -104,19 +102,36 @@ public class CombatActivity extends AppCompatActivity {
             state.combatLance = false;
         }
 
-        if (state.combatLance) {
+        if (state != null && state.combatLance) {
 
             try {
+
                 Combat combat = new Combat();
-                combat.lancerCombat(this, perso, binding, state);
-            }
-            catch (Exception e) {
+
+                combat.lancerCombat(
+                        this,
+                        perso,
+                        binding,
+                        state
+                );
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
             binding.imageJoueur.setVisibility(View.GONE);
             binding.btnFight.setVisibility(View.GONE);
             binding.Retour.setVisibility(View.GONE);
+
+            if (state.tourJoueur) {
+
+                TourJoueur.tourJoueur(
+                        state,
+                        perso,
+                        this,
+                        binding
+                );
+            }
         } else {
             binding.imageJoueur.setVisibility(View.VISIBLE);
 

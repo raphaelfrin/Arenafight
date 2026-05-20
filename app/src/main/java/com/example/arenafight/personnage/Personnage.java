@@ -70,21 +70,20 @@ public class Personnage implements Serializable {
         // Augmentation des stats selon la classe
         switch (classe) {
             case "Guerrier":
-                pv += 10;          // 10 PV max
+                pv += 5;          // 10 PV max
                 pvActuel = pv;     // restauration automatique
-                atq += 2;          // +2 ATQ
-                def += 2;          // +2 DEF
+                atq += 1;          // +2 ATQ
+                def += 1;          // +2 DEF
                 break;
             case "Mage":
-                pv += 5;
+                pv += 2;
                 pvActuel = pv;
-                atq += 5;
+                atq += 2;
                 break;
             case "Assassin":
-                pv += 3;
+                pv += 2;
                 pvActuel = pv;
-                atq += 6;
-                def += 1;
+                atq += 3;
                 break;
             default:
                 // classes futures

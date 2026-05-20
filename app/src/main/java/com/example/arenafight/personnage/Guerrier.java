@@ -7,8 +7,8 @@ public class Guerrier extends Personnage {
     public Guerrier(String nom) {
         super(nom, "Guerrier",
                 15,   // PV max
-                5,   // ATQ
-                2);   // DEF );
+                3,   // ATQ
+                0);   // DEF );
         this.imageResId = R.drawable.guerrier;
     }
 }

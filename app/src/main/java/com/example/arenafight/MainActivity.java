@@ -138,19 +138,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Spinner selection classe
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_item,   // 👈 TON layout custom
                 getResources().getStringArray(R.array.options_menu)
-
         ) {
             @Override
             public boolean isEnabled(int position) {
                 return position != 0;
             }
         };
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
         binding.SpinnerClasse.setAdapter(adapter);
 
         binding.SpinnerClasse.setOnTouchListener((v, event) -> {

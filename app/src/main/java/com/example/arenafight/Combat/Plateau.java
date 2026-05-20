@@ -112,7 +112,7 @@ public class Plateau {
             barreVie.setLayoutParams(barreParams);
 
             barreVie.setProgressDrawable(
-                    AppCompatResources.getDrawable(context, R.drawable.barre_vie)
+                    AppCompatResources.getDrawable(context, R.drawable.barre_vie_joueur)
             );
 
             // JOUEUR
@@ -131,6 +131,10 @@ public class Plateau {
                 imageCase.setImageResource(state.monstre.getImageResId());
                 barreVie.setMax(state.monstre.getPvMax());
                 barreVie.setProgress(state.monstre.getPv());
+
+                barreVie.setProgressDrawable(
+                        AppCompatResources.getDrawable(context, R.drawable.barre_vie_monstre)
+                );
 
                 casePlateau.addView(barreVie);
 

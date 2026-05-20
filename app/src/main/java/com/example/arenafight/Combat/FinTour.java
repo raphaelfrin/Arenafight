@@ -13,7 +13,7 @@ public class FinTour {
     public static void finTour(CombatState state, Personnage perso, Context context, ActivityCombatBinding binding) {
         if (!state.monstre.estVivant()) {
             perso.setExp(perso.getExp() + 1);
-            if (perso.getExp()==1) {
+            if (perso.getExp()==5) {
                 perso.setExp(0);
                 perso.levelUp();
             }

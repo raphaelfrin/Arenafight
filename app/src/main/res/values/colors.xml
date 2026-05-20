@@ -10,4 +10,5 @@
     <color name="bleu">#2196F3</color> <!-- bleu vif -->
     <color name="jaune">#FFEB3B</color> <!-- jaune lumineux -->
     <color name="violet">#9C27B0</color> <!-- violet moyen -->
+    <color name="gris">#1A1A1A</color> <!-- violet moyen -->
 </resources>

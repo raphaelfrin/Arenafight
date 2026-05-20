@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Fond -->
     <item android:id="@android:id/background">
         <shape>
             <corners android:radius="6dp"/>
@@ -10,12 +8,11 @@
         </shape>
     </item>
 
-    <!-- Vie -->
     <item android:id="@android:id/progress">
         <clip>
             <shape>
                 <corners android:radius="6dp"/>
-                <solid android:color="#00FF00"/>
+                <solid android:color="#FF0000"/>
             </shape>
         </clip>
     </item>

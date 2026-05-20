@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
             ).show();
         }
 
-        if (currentPerso.getLv() >= 10) {
+        if (currentPerso != null && currentPerso.getLv() >= 10) {
             Toast.makeText(
                     this,
                     "Votre personnage n'a plus aucun adversaire à affronter. Créez-en un nouveau.",

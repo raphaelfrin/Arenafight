@@ -2,6 +2,7 @@ package com.example.arenafight.Combat;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.LinearLayout;
 import com.example.arenafight.Combat.CombatState;
 import com.example.arenafight.databinding.ActivityCombatBinding;
 import com.example.arenafight.personnage.Personnage;
@@ -16,6 +17,35 @@ public class TourJoueur {
             ActivityCombatBinding binding
     ) {
 
+        binding.getRoot().setOnClickListener(v -> {
+
+            if (state.enModeDeplacement) {
+
+                TourJoueur.annulerDeplacement(
+                        context,
+                        binding.layoutPlateau,
+                        state,
+                        TAILLE_PLATEAU,
+                        perso.getImageResId(),
+                        perso,
+                        binding
+                );
+            }
+
+            if (state.enModeAttaque) {
+
+                TourJoueur.annulerAttaque(
+                        context,
+                        binding.layoutPlateau,
+                        state,
+                        TAILLE_PLATEAU,
+                        perso.getImageResId(),
+                        perso,
+                        binding
+                );
+            }
+        });
+
         if (!state.tourJoueur) return;
         binding.btnAtk1.setVisibility(View.VISIBLE);
         binding.btnAtk2.setVisibility(View.VISIBLE);
@@ -28,24 +58,87 @@ public class TourJoueur {
         binding.btnAtk1.setText(attaques[0].getNom());
         binding.btnAtk1.setOnClickListener(v -> {
 
-            executerAttaque(state, perso, attaques[0]);
-            endTurn(state, perso, context, binding);
+            if (state.enModeDeplacement) {
+
+                TourJoueur.annulerDeplacement(
+                        context,
+                        binding.layoutPlateau,
+                        state,
+                        TAILLE_PLATEAU,
+                        perso.getImageResId(),
+                        perso,
+                        binding
+                );
+            }
+
+            state.enModeAttaque = true;
+            Attaque att = attaques[0];
+            state.porteeAttaqueMin = att.getPorteeMin();
+            state.porteeAttaqueMax = att.getPorteeMax();
+            state.degatAttaque = (float) att.getBonusDegats();
+
+            Plateau.afficherPlateau(
+                    context,
+                    binding.layoutPlateau,
+                    state,
+                    TAILLE_PLATEAU,
+                    perso.getImageResId(),
+                    perso,
+                    binding
+            );
         });
 
         // ATTACK 2
         if (attaques.length > 1) {
-
             binding.btnAtk2.setText(attaques[1].getNom());
             binding.btnAtk2.setOnClickListener(v -> {
 
-                executerAttaque(state, perso, attaques[1]);
-                endTurn(state, perso, context, binding);
+                if (state.enModeDeplacement) {
+
+                    TourJoueur.annulerDeplacement(
+                            context,
+                            binding.layoutPlateau,
+                            state,
+                            TAILLE_PLATEAU,
+                            perso.getImageResId(),
+                            perso,
+                            binding
+                    );
+                }
+                state.enModeAttaque = true;
+                Attaque att = attaques[1];
+                state.porteeAttaqueMin = att.getPorteeMin();
+                state.porteeAttaqueMax = att.getPorteeMax();
+                state.degatAttaque = (float) att.getBonusDegats();
+
+                Plateau.afficherPlateau(
+                        context,
+                        binding.layoutPlateau,
+                        state,
+                        TAILLE_PLATEAU,
+                        perso.getImageResId(),
+                        perso,
+                        binding
+                );
             });
         }
 
         // MOVE
         binding.btnMove1.setText(deplacements[0].getNom());
         binding.btnMove1.setOnClickListener(v -> {
+
+            if (state.enModeAttaque) {
+
+                TourJoueur.annulerAttaque(
+                        context,
+                        binding.layoutPlateau,
+                        state,
+                        TAILLE_PLATEAU,
+                        perso.getImageResId(),
+                        perso,
+                        binding
+                );
+            }
 
             Deplacement move = deplacements[0]; // ou sélection dynamique
 
@@ -68,8 +161,20 @@ public class TourJoueur {
             binding.btnMove2.setText(deplacements[1].getNom());
             binding.btnMove2.setOnClickListener(v -> {
 
-                state.enModeDeplacement = true;
+                if (state.enModeAttaque) {
 
+                    TourJoueur.annulerAttaque(
+                            context,
+                            binding.layoutPlateau,
+                            state,
+                            TAILLE_PLATEAU,
+                            perso.getImageResId(),
+                            perso,
+                            binding
+                    );
+                }
+
+                state.enModeDeplacement = true;
                 state.distanceDeplacement = deplacements[1].getDistance();
 
                 Plateau.afficherPlateau(
@@ -152,5 +257,51 @@ public class TourJoueur {
                     new Deplacement("avancer", 1)
             };
         }
+    }
+
+    public static void annulerDeplacement(
+            Context context,
+            LinearLayout layoutPlateau,
+            CombatState state,
+            int taille,
+            int imageJoueur,
+            Personnage perso,
+            ActivityCombatBinding binding
+    ) {
+
+        state.enModeDeplacement = false;
+
+        Plateau.afficherPlateau(
+                context,
+                layoutPlateau,
+                state,
+                taille,
+                imageJoueur,
+                perso,
+                binding
+        );
+    }
+
+    public static void annulerAttaque(
+            Context context,
+            LinearLayout layoutPlateau,
+            CombatState state,
+            int taille,
+            int imageJoueur,
+            Personnage perso,
+            ActivityCombatBinding binding
+    ) {
+
+        state.enModeAttaque = false;
+
+        Plateau.afficherPlateau(
+                context,
+                layoutPlateau,
+                state,
+                taille,
+                imageJoueur,
+                perso,
+                binding
+        );
     }
 }

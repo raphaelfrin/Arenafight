@@ -41,12 +41,28 @@ public class Plateau {
 
             boolean isCaseAccessible;
 
+            boolean isCasePortee;
+
+            if (state.enModeAttaque) {
+
+                int min = Math.max(0, state.posJ + state.porteeAttaqueMin);
+                int max = Math.min(taille, state.posJ + state.porteeAttaqueMax);
+
+                if (i >= min && i <= max && i != state.posJ) {
+                    isCasePortee = true;
+                } else {
+                    isCasePortee = false;
+                }
+            } else {
+                isCasePortee = false;
+            }
+
             if (state.enModeDeplacement) {
 
                 int min = Math.max(0, state.posJ - state.distanceDeplacement);
                 int max = Math.min(state.posM - 1, state.posJ + state.distanceDeplacement);
 
-                if (i >= min && i <= max) {
+                if (i >= min && i <= max && i != state.posJ) {
                     isCaseAccessible = true;
                 } else {
                     isCaseAccessible = false;
@@ -117,6 +133,10 @@ public class Plateau {
                 barreVie.setProgress(state.monstre.getPv());
 
                 casePlateau.addView(barreVie);
+
+                if (state.enModeAttaque && isCasePortee) {
+                    imageCase.setColorFilter(0x55FF0000); // rouge transparent
+                }
             }
 
             // VIDE
@@ -124,6 +144,8 @@ public class Plateau {
                 imageCase.setImageResource(R.drawable.case_vide);
                 if (isCaseAccessible) {
                     imageCase.setColorFilter(0x550000FF); // bleu transparent
+                } else if (isCasePortee) {
+                    imageCase.setColorFilter(0x55FF0000); // rouge transparent
                 }
             }
 
@@ -131,12 +153,21 @@ public class Plateau {
 
             casePlateau.setOnClickListener(v -> {
 
-                if (!state.enModeDeplacement) return;
-                if (!isCaseAccessible) return;
+                if (state.enModeDeplacement && isCaseAccessible) {
+                    state.posJ = index;
+                    state.enModeDeplacement = false;
+                } else if (state.enModeAttaque && isCasePortee) {
+                    if (index == state.posM) {
+                        int degats = (int)(
+                                perso.getAtq() * state.degatAttaque
+                        );
 
-                state.posJ = index;
-
-                state.enModeDeplacement = false;
+                        state.monstre.setPv(
+                                state.monstre.getPv() - degats
+                        );
+                    }
+                    state.enModeAttaque = false;
+                } else return;
 
                 // refresh plateau
                 Plateau.afficherPlateau(
@@ -164,5 +195,4 @@ public class Plateau {
             layoutPlateau.addView(casePlateau);
         }
     }
-
 }

@@ -64,8 +64,6 @@ Chaque vague devient plus intense et stratégique.
 
 - ☕ Java
 - 📱 Android SDK
-- 🎮 SurfaceView / Canvas (rendu 2D)
-- 🔁 Game Loop (Thread dédié)
 - 👆 Touch Events Android
 
 ---

@@ -22,6 +22,12 @@
     <string name="atk_1">Atk 1</string>
     <string name="atk_2">Atk 2</string>
     <string name="move">Move</string>
+    <string name="retour_menu">Retour menu</string>
+    <string name="nouveau_combat">Nouveau combat</string>
+    <string name="d_faite">Défaite...</string>
+    <string name="est_ko">" est KO."</string>
+    <string name="retour__menu">Retour menu</string>
+    <string name="victoire">Victoire !</string>
 
     <string-array name="options_menu">
         <item>Choisissez une classe</item>

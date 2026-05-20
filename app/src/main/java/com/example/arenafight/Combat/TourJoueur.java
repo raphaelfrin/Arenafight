@@ -65,23 +65,18 @@ public class TourJoueur {
         if (deplacements.length > 1) {
 
             binding.btnMove2.setVisibility(View.VISIBLE);
-
-            binding.btnMove2.setText(
-                    deplacements[1].getNom()
-            );
-
+            binding.btnMove2.setText(deplacements[1].getNom());
             binding.btnMove2.setOnClickListener(v -> {
 
                 state.enModeDeplacement = true;
 
-                state.distanceDeplacement =
-                        deplacements[1].getDistance();
+                state.distanceDeplacement = deplacements[1].getDistance();
 
                 Plateau.afficherPlateau(
                         context,
                         binding.layoutPlateau,
                         state,
-                        10,
+                        TAILLE_PLATEAU,
                         perso.getImageResId(),
                         perso,
                         binding
@@ -89,7 +84,6 @@ public class TourJoueur {
             });
 
         } else {
-
             binding.btnMove2.setVisibility(View.GONE);
         }
     }

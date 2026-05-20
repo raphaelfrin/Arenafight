@@ -66,14 +66,10 @@ public class ResultActivity extends AppCompatActivity {
             return;
         }
 
-        Log.d("RESULT", "LV sauvegardé = " + perso.getLv());
-        Log.d("RESULT", "EXP sauvegardé = " + perso.getExp());
-        Log.e("TEST", "je suis dans result");
-
         // VICTOIRE
         if (victoire) {
 
-            binding.txtResult.setText("Victoire !");
+            binding.txtResult.setText(R.string.victoire);
             // on SAUVEGARDE
             PersonnagePreferences.sauvegarderPersonnage(this, perso);
 
@@ -88,28 +84,41 @@ public class ResultActivity extends AppCompatActivity {
 
             binding.txtStats.setText(stats);
 
-            binding.btnAction.setText("Nouveau combat");
+            if (perso.getLv() >= 10) {
+                binding.btnAction.setText(R.string.retour_menu);
 
-            binding.btnAction.setOnClickListener(v -> {
+                binding.btnAction.setOnClickListener(v -> {
 
-                Intent intent = new Intent(this, CombatActivity.class);
-                intent.putExtra("perso", perso);
-                startActivity(intent);
-                finish();
-            });
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    startActivity(intent);
+                    finish();
+                });
+            } else {
+                binding.btnAction.setText(R.string.nouveau_combat);
+
+                binding.btnAction.setOnClickListener(v -> {
+
+                    Intent intent = new Intent(this, CombatActivity.class);
+                    intent.putExtra("perso", perso);
+                    startActivity(intent);
+                    finish();
+                });
+            }
         }
 
         // DEFAITE
         else {
 
-            binding.txtResult.setText("Défaite...");
+            binding.txtResult.setText(R.string.d_faite);
 
-            binding.txtStats.setText(perso.getNom() + " est KO.");
+            binding.txtStats.setText(perso.getNom() + getString(R.string.est_ko));
 
             // on SAUVEGARDE
             PersonnagePreferences.sauvegarderPersonnage(this, perso);
 
-            binding.btnAction.setText("Retour menu");
+            binding.btnAction.setText(R.string.retour__menu);
 
             binding.btnAction.setOnClickListener(v -> {
 

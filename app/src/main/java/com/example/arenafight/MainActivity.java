@@ -74,6 +74,25 @@ public class MainActivity extends AppCompatActivity {
 
         //bouton jouer
         binding.buttonPlay.setOnClickListener(v -> {
+            if (currentPerso != null) {
+                if (PersonnagePreferences.estMort(this)) {
+                    Snackbar.make(
+                            binding.getRoot(),
+                            "Votre personnage est mort. Créez-en un nouveau.",
+                            Snackbar.LENGTH_LONG
+                    ).show();
+                    return;
+                }
+
+                if (currentPerso.getLv() >= 10) {
+                    Snackbar.make(
+                            binding.getRoot(),
+                            "Votre personnage n'a plus aucun adversaire à affronter. Créez-en un nouveau.",
+                            Snackbar.LENGTH_LONG
+                    ).show();
+                    return;
+                }
+            }
 
             String nomJoueur = Objects.requireNonNull(binding.editTextNom.getText()).toString().trim();
 
@@ -226,15 +245,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Si le personnage est mort
         if(PersonnagePreferences.estMort(this)) {
-            binding.buttonPlay.setEnabled(false);
-
             Toast.makeText(
                     this,
                     "Votre personnage est mort. Créez-en un nouveau.",
                     Toast.LENGTH_LONG
             ).show();
+        }
 
-            binding.buttonPlay.setEnabled(false);
+        if (currentPerso.getLv() >= 10) {
+            Toast.makeText(
+                    this,
+                    "Votre personnage n'a plus aucun adversaire à affronter. Créez-en un nouveau.",
+                    Toast.LENGTH_LONG
+            ).show();
         }
 
         binding.btnNouveau.setOnClickListener(v -> {

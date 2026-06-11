@@ -48,4 +48,15 @@ public class AudioManager {
         musicPlayer.setLooping(true);
         musicPlayer.start();
     }
+    public void pauseMusic() {
+        if (musicPlayer != null && musicPlayer.isPlaying()) {
+            musicPlayer.pause();
+        }
+    }
+
+    public void resumeMusic() {
+        if (musicPlayer != null) {
+            musicPlayer.start();
+        }
+    }
 }

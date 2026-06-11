@@ -194,11 +194,16 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AudioManager.getInstance().pauseMusic();
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        AudioManager.getInstance().resumeMusic();
         isLoading = true;
 
         if (PersonnagePreferences.personnageExiste(this)) {

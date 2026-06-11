@@ -24,7 +24,7 @@ public class AudioManager {
     private HashMap<SoundType, Integer> sounds = new HashMap<>();
     public void init(Context context) {
 
-        //musics.put(MusicType.MENU, R.raw.menu_music);
+        musics.put(MusicType.COMBAT, R.raw.combat);
     }
 
     public void playMusic(Context context, MusicType musicType) {
@@ -53,12 +53,5 @@ public class AudioManager {
         }
     }
 
-    public void playSound(SoundType soundType) {
 
-        Integer soundId = loadedSounds.get(soundType);
-
-        if(soundId != null) {
-            soundPool.play(soundId, 1f, 1f, 1, 0, 1f);
-        }
-    }
 }

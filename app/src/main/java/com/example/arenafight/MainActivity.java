@@ -15,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.example.arenafight.affichage.Visible;
+import com.example.arenafight.audio.AudioManager;
+import com.example.arenafight.audio.MusicType;
 import com.example.arenafight.databinding.ActivityMainBinding;
 import com.example.arenafight.personnage.Assassin;
 import com.example.arenafight.personnage.Guerrier;
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         });
         // Cache le bouton au démarrage
         binding.btnNouveau.setVisibility(View.GONE);
+
+        AudioManager.getInstance().playMusic(this, MusicType.MENU);
 
         // orientation de l'écran
         int orientation = getResources().getConfiguration().orientation;

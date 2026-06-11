@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         // Cache le bouton au démarrage
         binding.btnNouveau.setVisibility(View.GONE);
 
-        AudioManager.getInstance().playMusic(this, MusicType.MENU);
+        AudioManager.getInstance().playMusic(this, MusicType.COMBAT);
 
         // orientation de l'écran
         int orientation = getResources().getConfiguration().orientation;

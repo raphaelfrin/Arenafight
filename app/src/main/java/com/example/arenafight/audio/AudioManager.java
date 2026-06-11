@@ -24,7 +24,7 @@ public class AudioManager {
     private HashMap<SoundType, Integer> sounds = new HashMap<>();
     public void init(Context context) {
 
-        musics.put(MusicType.MENU, R.raw.menu_music);
+        //musics.put(MusicType.MENU, R.raw.menu_music);
     }
 
     public void playMusic(Context context, MusicType musicType) {

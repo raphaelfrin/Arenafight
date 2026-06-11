@@ -26,6 +26,8 @@ public class AudioManager {
     // 🔥 ICI TU METS INIT
     public void init(Context context) {
         musics.put(MusicType.COMBAT, R.raw.combat);
+        musics.put(MusicType.MENU, R.raw.menu);
+
     }
 
     public void playMusic(Context context, MusicType musicType) {

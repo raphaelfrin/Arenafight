@@ -2,6 +2,8 @@ package com.example.arenafight.Combat;
 
 import android.content.Context;
 
+import com.example.arenafight.audio.AudioManager;
+import com.example.arenafight.audio.MusicType;
 import com.example.arenafight.databinding.ActivityCombatBinding;
 import com.example.arenafight.monstre.UtilisMonstre;
 import com.example.arenafight.personnage.Personnage;
@@ -23,6 +25,7 @@ public class Combat {
             state.hpJ = perso.getPvActuel();
             state.tourJoueur = true;
             state.combatLance = true;
+            AudioManager.getInstance().playMusic(context, MusicType.COMBAT);
         }
 
         Plateau.afficherPlateau(
